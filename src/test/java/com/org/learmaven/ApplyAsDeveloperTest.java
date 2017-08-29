@@ -15,17 +15,22 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import com.org.learmaven.LoginPage;
+
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import com.codoid.products.exception.FilloException;
+import com.codoid.products.fillo.Fillo;
 import com.org.learmaven.FILLOAPP;
-
+import com.org.learmaven.SendMail;
 /**
  * Created by ovidiu.zakarias on 13.03.2017.
  */
 public class ApplyAsDeveloperTest {
-
-WebDriver driver;
+	Fillo fillo;
+	Driver driver;
+	
+//WebDriver driver;
     static ExtentReports report;
     ExtentTest test;
     
@@ -42,7 +47,12 @@ WebDriver driver;
 	{
 		report.flush();
 	}
-   // @Before
+    @Before
+    public void setUp() {
+    	  String browserName = getParameter("browser");
+    	  driver = new Driver(browserName);
+    	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    	 }
    // public void setup() {
         //use Chrome Driver
         //System.setProperty("webdriver.chrome.driver", (System.getProperty("user.dir") + "/src/main/resources/chromedriver"));
@@ -54,13 +64,20 @@ WebDriver driver;
     public void applyAsDeveloper() throws FilloException {
         //Create object of HomePage Class
     	test = report.startTest("Testcase 1 - Test about you page");
-    	driver = new ChromeDriver();
-    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    	//driver = new ChromeDriver();
+    	//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    	
+ 
+    	//String strQuery="Select * from Sheet1 where ACCTYPE='A' and GEN='F'";
+    	//Filloapi fillom = new Filloapi(strQuery);
+    	//fillom.filloz(strQuery);
+    	String qry="Select * from Sheet1 where ACCTYPE='A' and GEN='F'";
     	LoginPage lp = new LoginPage(driver);
     	//FILLOAPP app = new FILLOAPP();
     	//lp.un("TC001");
-    	FILLOAPP.inputText(lp.UseName_ED, "UserName_ED");
-    	FILLOAPP.inputText(lp.Pasword_ED, "Pard_ED");
+    	
+    	FILLOAPP.inputText(lp.UseName_ED, "UserName_ED",qry);
+    	FILLOAPP.inputText(lp.Pasword_ED, "Pard_ED",qry);
     	
     	
     	test.log(LogStatus.PASS, "VERIFIED");
@@ -99,5 +116,15 @@ WebDriver driver;
     public void close() { 
     //driver.close(); 
     test = null;}
+    
+    
+    private String getParameter(String name) {
+    	  String value = System.getProperty(name);
+    	  if (value == null)
+    	     throw new RuntimeException(name + " is not a parameter!");
+    	  if (value.isEmpty())
+    	    throw new RuntimeException(name + " is empty!");
+    	  return value;
+    	 }
 
 }

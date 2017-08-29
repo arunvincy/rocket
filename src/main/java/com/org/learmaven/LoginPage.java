@@ -28,9 +28,9 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void un(String TCID) throws FilloException{
-    	FILLOAPP.inputText(UseName_ED, "UserName_ED");
-    }
+   // public void un(String TCID) throws FilloException{
+    	//FILLOAPP.inputText(UseName_ED, "UserName_ED");
+    //}
     
 
    // public void pg_ValidLogin(String TCID) throws FilloException {
