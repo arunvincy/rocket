@@ -1,6 +1,7 @@
 package com.org.learmaven;
 
 import org.junit.After;
+import com.org.learmaven.scs;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import com.org.learmaven.LoginPage;
 
+import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,7 @@ import com.org.learmaven.SendMail;
  * Created by ovidiu.zakarias on 13.03.2017.
  */
 public class ApplyAsDeveloperTest {
+	
 	Fillo fillo;
 	Driver driver;
 	
@@ -52,6 +55,7 @@ public class ApplyAsDeveloperTest {
     	  String browserName = getParameter("browser");
     	  driver = new Driver(browserName);
     	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    	 
     	 }
    // public void setup() {
         //use Chrome Driver
@@ -61,7 +65,7 @@ public class ApplyAsDeveloperTest {
    // }
 
     @Test
-    public void applyAsDeveloper() throws FilloException {
+    public void applyAsDeveloper() throws FilloException, IOException, InterruptedException {
         //Create object of HomePage Class
     	test = report.startTest("Testcase 1 - Test about you page");
     	//driver = new ChromeDriver();
@@ -78,7 +82,8 @@ public class ApplyAsDeveloperTest {
     	
     	FILLOAPP.inputText(lp.UseName_ED, "UserName_ED",qry);
     	FILLOAPP.inputText(lp.Pasword_ED, "Pard_ED",qry);
-    	
+    	scs gs= new scs();
+    	gs.fs("TC1sc1");
     	
     	test.log(LogStatus.PASS, "VERIFIED");
     	//app.inputText(UseName_ED, UserName_ED, TCID);
@@ -110,9 +115,10 @@ public class ApplyAsDeveloperTest {
         test.log(LogStatus.PASS, "VERIFIED");
         //Click on join
        // developerApplyPage.clickOnJoin();**/
-    }
+    
+}
 
-    @After
+	@After
     public void close() { 
     //driver.close(); 
     test = null;}
